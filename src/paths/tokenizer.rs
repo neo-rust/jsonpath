@@ -1,3 +1,6 @@
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
 use std::result::Result;
 
 use super::str_reader::{ReaderError, StrRange, StrReader};

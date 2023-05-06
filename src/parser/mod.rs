@@ -1,6 +1,10 @@
 mod path_reader;
 mod tokenizer;
 
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
 use std::str::FromStr;
 
 use self::tokenizer::*;

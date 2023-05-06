@@ -3,7 +3,7 @@
 //! # Example
 //! ```
 //! extern crate jsonpath_lib as jsonpath;
-//! #[macro_use] extern crate serde_json;
+//! #[macro_use] extern crate serde_json_sgx as serde_json;
 //! let json_obj = json!({
 //!     "store": {
 //!         "book": [
@@ -126,7 +126,11 @@ extern crate core;
 #[macro_use]
 extern crate log;
 extern crate serde;
-extern crate serde_json;
+extern crate serde_json_sgx as serde_json;
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
 
 use serde_json::Value;
 
@@ -174,7 +178,7 @@ impl From<&paths::TokenError> for JsonPathError {
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_firend = jsonpath::compile("$..friends[0]");
 ///
@@ -218,7 +222,7 @@ pub fn compile(path: &str) -> impl FnMut(&Value) -> Result<Vec<&Value>, JsonPath
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
 ///     "school": {
@@ -262,7 +266,7 @@ pub fn selector<'a>(json: &'a Value) -> impl FnMut(&'a str) -> Result<Vec<&'a Va
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
 /// extern crate serde;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde::{Deserialize, Serialize};
 ///
@@ -318,7 +322,7 @@ pub fn selector_as<'a, T: serde::de::DeserializeOwned>(json: &'a Value)
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
 ///     "school": {
@@ -348,7 +352,7 @@ pub fn select<'a>(json: &'a Value, path: &'a str) -> Result<Vec<&'a Value>, Json
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let ret = jsonpath::select_as_str(r#"
 /// {
@@ -379,7 +383,7 @@ pub fn select_as_str(json_str: &str, path: &str) -> Result<String, JsonPathError
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
 /// extern crate serde;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde::{Deserialize, Serialize};
 ///
@@ -425,7 +429,7 @@ pub fn select_as<T: serde::de::DeserializeOwned>(
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
 ///     "school": {
@@ -464,7 +468,7 @@ pub fn delete(value: Value, path: &str) -> Result<Value, JsonPathError> {
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde_json::Value;
 ///
@@ -520,7 +524,7 @@ pub fn replace_with<F>(value: Value, path: &str, fun: &mut F) -> Result<Value, J
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_friend = jsonpath::Compiled::compile("$..friends[0]").unwrap();
 ///
@@ -591,7 +595,7 @@ impl Compiled {
 ///
 /// ```rust
 /// extern crate jsonpath_lib as jsonpath;
-/// #[macro_use] extern crate serde_json;
+/// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_friend = jsonpath::PathCompiled::compile("$..friends[0]").unwrap();
 ///

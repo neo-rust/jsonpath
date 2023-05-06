@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate serde_json;
+extern crate serde_json_sgx as serde_json;
 extern crate jsonpath_lib;
 
 use common::{setup};

@@ -1,6 +1,6 @@
 extern crate jsonpath_lib as jsonpath;
 #[macro_use]
-extern crate serde_json;
+extern crate serde_json_sgx as serde_json;
 
 use serde_json::Value;
 

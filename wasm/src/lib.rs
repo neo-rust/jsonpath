@@ -1,7 +1,7 @@
 extern crate cfg_if;
 extern crate js_sys;
 extern crate jsonpath_lib as jsonpath;
-extern crate serde_json;
+extern crate serde_json_sgx as serde_json;
 extern crate wasm_bindgen;
 
 use cfg_if::cfg_if;

@@ -8,7 +8,7 @@ extern crate core;
 extern crate js_sys;
 extern crate jsonpath_wasm as jsonpath;
 #[macro_use]
-extern crate serde_json;
+extern crate serde_json_sgx as serde_json;
 extern crate wasm_bindgen;
 extern crate wasm_bindgen_test;
 

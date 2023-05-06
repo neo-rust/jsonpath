@@ -1,3 +1,8 @@
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_void};
 
