@@ -2,7 +2,7 @@
 //!
 //! # Example
 //! ```
-//! extern crate jsonpath_lib as jsonpath;
+//! extern crate jsonpath_sgx as jsonpath;
 //! #[macro_use] extern crate serde_json_sgx as serde_json;
 //! let json_obj = json!({
 //!     "store": {
@@ -122,10 +122,25 @@
 //!                 &json!({"category" : "fiction","author" : "Herman Melville","title" : "Moby Dick","isbn" : "0-553-21311-3","price" : 8.99})
 //!             ]);
 //! ```
+#![doc(
+html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
+html_favicon_url = "https://www.rust-lang.org/static/images/favicon.ico",
+html_root_url = "https://docs.rs/env_logger/0.7.1"
+)]
+#![cfg_attr(test, deny(warnings))]
+// When compiled for the rustc compiler itself we want to make sure that this is
+// an unstable crate
+#![cfg_attr(rustbuild, feature(staged_api, rustc_private))]
+#![cfg_attr(rustbuild, unstable(feature = "rustc_private", issue = "27812"))]
+#![deny(missing_debug_implementations, missing_docs, warnings)]
+
 #![cfg_attr(all(feature = "mesalock_sgx",
 not(target_env = "sgx")), no_std)]
 #![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
 
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
 
 extern crate core;
 #[macro_use]
@@ -133,13 +148,11 @@ extern crate log;
 extern crate serde;
 extern crate serde_json_sgx as serde_json;
 
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
-
 extern crate alloc;
 
 use alloc::rc::Rc;
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
 use serde_json::Value;
 
 #[allow(deprecated)]
@@ -184,7 +197,7 @@ impl From<&paths::TokenError> for JsonPathError {
 /// It is a high-order function. it compile a jsonpath and then returns a closure that has JSON as argument. if you need to reuse a jsonpath, it is good for performance.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_firend = jsonpath::compile("$..friends[0]");
@@ -228,7 +241,7 @@ pub fn compile(path: &str) -> impl FnMut(&Value) -> Result<Vec<&Value>, JsonPath
 /// It is a high-order function. it returns a closure that has a jsonpath string as argument. you can use diffenent jsonpath for one JSON object.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
@@ -271,7 +284,7 @@ pub fn selector<'a>(json: &'a Value) -> impl FnMut(&'a str) -> Result<Vec<&'a Va
 /// It is the same to `selector` function. but it deserialize the result as given type `T`.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// extern crate serde;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
@@ -328,7 +341,7 @@ pub fn selector_as<'a, T: serde::de::DeserializeOwned>(json: &'a Value)
 /// It is a simple select function. but it compile the jsonpath argument every time.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
@@ -358,7 +371,7 @@ pub fn select<'a>(json: &'a Value, path: &'a str) -> Result<Vec<&'a Value>, Json
 /// It is the same to `select` function but it return the result as string.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let ret = jsonpath::select_as_str(r#"
@@ -388,7 +401,7 @@ pub fn select_as_str(json_str: &str, path: &str) -> Result<String, JsonPathError
 /// It is the same to `select` function but it deserialize the the result as given type `T`.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// extern crate serde;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
@@ -435,7 +448,7 @@ pub fn select_as<T: serde::de::DeserializeOwned>(
 /// Delete(= replace with null) the JSON property using the jsonpath.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let json_obj = json!({
@@ -474,7 +487,7 @@ pub fn delete(value: Value, path: &str) -> Result<Value, JsonPathError> {
 /// Select JSON properties using a jsonpath and transform the result and then replace it. via closure that implements `FnMut` you can transform the selected results.
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde_json::Value;
@@ -530,7 +543,7 @@ pub fn replace_with<F>(value: Value, path: &str, fun: &mut F) -> Result<Value, J
 /// ## Example
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_friend = jsonpath::Compiled::compile("$..friends[0]").unwrap();
@@ -601,7 +614,7 @@ impl Compiled {
 /// ## Example
 ///
 /// ```rust
-/// extern crate jsonpath_lib as jsonpath;
+/// extern crate jsonpath_sgx as jsonpath;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// let mut first_friend = jsonpath::PathCompiled::compile("$..friends[0]").unwrap();

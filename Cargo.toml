@@ -18,9 +18,8 @@ travis-ci = { repository = "freestrings/jsonpath", branch = "master" }
 
 
 [features]
-default = ["mesalock_sgx", "std", "serde_json_sgx"]
-
-std = ["serde/std", "mesalock_sgx"]
+default = ["mesalock_sgx"]
+mesalock_sgx = ["serde/std","serde_json_sgx", "sgx_tstd"]
 
 
 # Provide integration for heap-allocated collections without depending on the
@@ -28,8 +27,6 @@ std = ["serde/std", "mesalock_sgx"]
 # NOTE: Disabling both `std` *and* `alloc` features is not supported yet.
 # Available on Rust 1.36+.
 alloc = ["serde/alloc"]
-
-mesalock_sgx = ["sgx_tstd"]
 
 [dependencies]
 log             = { git = "https://github.com/integritee-network/log-sgx" }
