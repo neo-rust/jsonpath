@@ -5,6 +5,8 @@ use alloc::borrow::ToOwned;
 use alloc::{format, vec};
 use alloc::string::{String, ToString};
 use alloc::vec::Vec;
+use serde::de::DeserializeOwned;
+use serde::Deserialize;
 
 use std::collections::HashSet;
 use std::fmt;
@@ -429,7 +431,7 @@ impl<'a, 'b> Selector<'a, 'b> {
         Ok(())
     }
 
-    pub fn select_as<T: serde::de::DeserializeOwned>(&mut self) -> Result<Vec<T>, JsonPathError> {
+    pub fn select_as<T: DeserializeOwned + for<'de> Deserialize<'de>>(&mut self) -> Result<Vec<T>, JsonPathError> {
         self._select()?;
 
         match &self.current {
