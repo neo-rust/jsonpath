@@ -1,8 +1,9 @@
+#![no_std]
 use alloc::string::String;
 use alloc::vec::Vec;
 use alloc::{format, vec};
-#[cfg(feature = "mesalock_sgx")]
-use sgx_tstd as std;
+
+extern crate sgx_tstd as std;
 
 use std::result::Result;
 

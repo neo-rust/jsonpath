@@ -1,8 +1,9 @@
+#![no_std]
 use alloc::vec;
 use alloc::vec::Vec;
 use serde_json::Value;
-#[cfg(feature = "mesalock_sgx")]
-use sgx_tstd as std;
+
+extern crate sgx_tstd as std;
 use std::collections::HashSet;
 
 pub(super) struct ValueWalker;
