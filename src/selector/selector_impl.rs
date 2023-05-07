@@ -2,6 +2,8 @@
 use alloc::string::{String, ToString};
 use alloc::vec;
 use alloc::vec::Vec;
+use serde::de::DeserializeOwned;
+use serde::Deserialize;
 
 extern crate sgx_tstd as std;
 
@@ -80,25 +82,18 @@ impl<'a> JsonSelector<'a> {
         Ok(())
     }
 
-    pub fn select_as<T: serde::de::DeserializeOwned>(&mut self) -> Result<Vec<T>, JsonPathError> {
+    pub fn select_as<T: DeserializeOwned + for<'de> Deserialize<'de>>(&mut self) -> Result<Vec<T>, JsonPathError> {
         self._select()?;
 
         match &self.current {
             Some(vec) => {
                 let mut ret = Vec::new();
-                // for v in vec {
-                //     match T::deserialize(*v) {
-                //         Ok(v) => ret.push(v),
-                //         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
-                //     }
-                // }
                 for v in vec {
-                    match serde_json::from_value::<T>(v.clone()) {
+                    match serde_json::from_value::<T>((**v).clone()) {
                         Ok(v) => ret.push(v),
                         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
                     }
                 }
-
                 Ok(ret)
             }
             _ => Err(JsonPathError::EmptyValue),
