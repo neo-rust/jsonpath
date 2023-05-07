@@ -2,14 +2,15 @@
 extern crate sgx_tstd as std;
 
 use alloc::borrow::ToOwned;
-use alloc::{format, vec};
 use alloc::string::{String, ToString};
 use alloc::vec::Vec;
-use serde::de::DeserializeOwned;
-use serde::Deserialize;
+use alloc::{format, vec};
 
 use std::collections::HashSet;
 use std::fmt;
+
+extern crate serde;
+extern crate serde_json_sgx as serde_json;
 
 use serde_json::map::Entry;
 use serde_json::{Number, Value};
@@ -431,7 +432,7 @@ impl<'a, 'b> Selector<'a, 'b> {
         Ok(())
     }
 
-    pub fn select_as<T: DeserializeOwned + for<'de> serde::de::Deserialize<'de>>(&mut self) -> Result<Vec<T>, JsonPathError> {
+    pub fn select_as<T: serde::de::DeserializeOwned>(&mut self) -> Result<Vec<T>, JsonPathError> {
         self._select()?;
 
         match &self.current {
