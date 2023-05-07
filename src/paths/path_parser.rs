@@ -1,9 +1,10 @@
+#![no_std]
+extern crate sgx_tstd as std;
+
 use alloc::boxed::Box;
 use alloc::string::String;
 use alloc::vec;
 use alloc::vec::Vec;
-#[cfg(feature = "mesalock_sgx")]
-use sgx_tstd as std;
 
 use std::str::FromStr;
 
