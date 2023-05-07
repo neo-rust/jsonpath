@@ -86,12 +86,19 @@ impl<'a> JsonSelector<'a> {
         match &self.current {
             Some(vec) => {
                 let mut ret = Vec::new();
+                // for v in vec {
+                //     match T::deserialize(*v) {
+                //         Ok(v) => ret.push(v),
+                //         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
+                //     }
+                // }
                 for v in vec {
-                    match T::deserialize(*v) {
+                    match serde_json::from_value::<T>(**v.clone()) {
                         Ok(v) => ret.push(v),
                         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
                     }
                 }
+
                 Ok(ret)
             }
             _ => Err(JsonPathError::EmptyValue),
