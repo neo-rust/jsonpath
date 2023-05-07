@@ -82,7 +82,7 @@ impl<'a> JsonSelector<'a> {
         Ok(())
     }
 
-    pub fn select_as<T: DeserializeOwned + for<'de> Deserialize<'de>>(&mut self) -> Result<Vec<T>, JsonPathError> {
+    pub fn select_as<T: DeserializeOwned>(&mut self) -> Result<Vec<T>, JsonPathError> {
         self._select()?;
 
         match &self.current {
