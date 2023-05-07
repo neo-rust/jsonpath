@@ -213,10 +213,10 @@ impl Cmp for CmpOr {
     }
 }
 
-
 #[cfg(test)]
 mod cmp_inner_tests {
     use alloc::string::ToString;
+    use alloc::vec;
     use serde_json::Value;
 
     use selector::cmp::*;

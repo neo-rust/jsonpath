@@ -1,4 +1,5 @@
 use alloc::string::{String, ToString};
+use alloc::vec;
 use alloc::vec::Vec;
 #[cfg(feature = "mesalock_sgx")]
 use sgx_tstd as std;
@@ -6,12 +7,12 @@ use sgx_tstd as std;
 use std::collections::HashSet;
 use std::rc::Rc;
 
-use serde_json::{Number, Value};
 use serde_json::map::Entry;
+use serde_json::{Number, Value};
 
-use JsonPathError;
-use paths::{ParserTokenHandler, PathParser, StrRange, tokens::*};
 use super::utils;
+use paths::{tokens::*, ParserTokenHandler, PathParser, StrRange};
+use JsonPathError;
 
 use super::terms::*;
 
@@ -116,9 +117,13 @@ impl<'a> JsonSelector<'a> {
         }
     }
 
-    fn compute_absolute_path_filter<F>(&mut self, token: &ParseToken, parse_value_reader: &F) -> bool
-        where
-            F: Fn(&StrRange) -> &'a str
+    fn compute_absolute_path_filter<F>(
+        &mut self,
+        token: &ParseToken,
+        parse_value_reader: &F,
+    ) -> bool
+    where
+        F: Fn(&StrRange) -> &'a str,
     {
         if !self.selectors.is_empty() {
             match token {
@@ -145,7 +150,10 @@ impl<'a> JsonSelector<'a> {
             return false;
         }
 
-        self.selectors.last_mut().unwrap().handle(token, parse_value_reader);
+        self.selectors
+            .last_mut()
+            .unwrap()
+            .handle(token, parse_value_reader);
         true
     }
 }
@@ -188,7 +196,9 @@ impl<'a> JsonSelector<'a> {
         if self.is_last_before_token_match(ParseToken::Array) {
             if let Some(Some(e)) = self.selector_filter.pop_term() {
                 if let ExprTerm::String(key) = e {
-                    self.current = self.selector_filter.filter_next_with_str(self.current.take(), key);
+                    self.current = self
+                        .selector_filter
+                        .filter_next_with_str(self.current.take(), key);
                     self.tokens.pop();
                     return;
                 }
@@ -203,12 +213,16 @@ impl<'a> JsonSelector<'a> {
             if let Some(Some(e)) = self.selector_filter.pop_term() {
                 let selector_filter_consumed = match e {
                     ExprTerm::Number(n) => {
-                        self.current = self.selector_filter.collect_all_with_num(self.current.take(), utils::to_f64(&n));
+                        self.current = self
+                            .selector_filter
+                            .collect_all_with_num(self.current.take(), utils::to_f64(&n));
                         self.selector_filter.pop_term();
                         true
                     }
                     ExprTerm::String(key) => {
-                        self.current = self.selector_filter.collect_all_with_str(self.current.take(), key);
+                        self.current = self
+                            .selector_filter
+                            .collect_all_with_str(self.current.take(), key);
                         self.selector_filter.pop_term();
                         true
                     }
@@ -227,10 +241,14 @@ impl<'a> JsonSelector<'a> {
         if let Some(Some(e)) = self.selector_filter.pop_term() {
             match e {
                 ExprTerm::Number(n) => {
-                    self.current = self.selector_filter.collect_next_with_num(self.current.take(), utils::to_f64(&n));
+                    self.current = self
+                        .selector_filter
+                        .collect_next_with_num(self.current.take(), utils::to_f64(&n));
                 }
                 ExprTerm::String(key) => {
-                    self.current = self.selector_filter.collect_next_with_str(self.current.take(), &[key]);
+                    self.current = self
+                        .selector_filter
+                        .collect_next_with_str(self.current.take(), &[key]);
                 }
                 ExprTerm::Json(rel, _, v) => {
                     if v.is_empty() {
@@ -289,20 +307,28 @@ impl<'a> JsonSelector<'a> {
             if self.selector_filter.is_term_empty() {
                 match t {
                     ParseToken::Leaves => {
-                        self.current = self.selector_filter.collect_all_with_str(self.current.take(), key)
+                        self.current = self
+                            .selector_filter
+                            .collect_all_with_str(self.current.take(), key)
                     }
                     ParseToken::In => {
-                        self.current = self.selector_filter.collect_next_with_str(self.current.take(), &[key])
+                        self.current = self
+                            .selector_filter
+                            .collect_next_with_str(self.current.take(), &[key])
                     }
                     _ => {}
                 }
             } else {
                 match t {
                     ParseToken::Leaves => {
-                        self.current = self.selector_filter.filter_all_with_str(self.current.take(), key);
+                        self.current = self
+                            .selector_filter
+                            .filter_all_with_str(self.current.take(), key);
                     }
                     ParseToken::In => {
-                        self.current = self.selector_filter.filter_next_with_str(self.current.take(), key);
+                        self.current = self
+                            .selector_filter
+                            .filter_next_with_str(self.current.take(), key);
                     }
                     _ => {}
                 }
@@ -316,7 +342,9 @@ impl<'a> JsonSelector<'a> {
         }
 
         if let Some(ParseToken::Array) = self.tokens.pop() {
-            self.current = self.selector_filter.collect_next_with_str(self.current.take(), keys);
+            self.current = self
+                .selector_filter
+                .collect_next_with_str(self.current.take(), keys);
         } else {
             unreachable!();
         }
@@ -430,8 +458,8 @@ impl<'a> JsonSelector<'a> {
 
 impl<'a> ParserTokenHandler<'a> for JsonSelector<'a> {
     fn handle<F>(&mut self, token: &ParseToken, parse_value_reader: &F)
-        where
-            F: Fn(&StrRange) -> &'a str
+    where
+        F: Fn(&StrRange) -> &'a str,
     {
         debug!("token: {:?}, stack: {:?}", token, self.tokens);
 
@@ -455,11 +483,12 @@ impl<'a> ParserTokenHandler<'a> for JsonSelector<'a> {
                 self.visit_key(key);
             }
             ParseToken::Keys(keys) => {
-                let keys: Vec<&str> = keys.iter().map(|s| { parse_value_reader(s) }).collect();
+                let keys: Vec<&str> = keys.iter().map(|s| parse_value_reader(s)).collect();
                 self.visit_keys(&keys)
             }
             ParseToken::Number(v) => {
-                self.selector_filter.push_term(Some(ExprTerm::Number(Number::from_f64(*v).unwrap())));
+                self.selector_filter
+                    .push_term(Some(ExprTerm::Number(Number::from_f64(*v).unwrap())));
             }
             ParseToken::Filter(ref ft) => self.visit_filter(ft),
             ParseToken::Range(from, to, step) => self.visit_range(from, to, step),
@@ -535,8 +564,8 @@ impl<'a> JsonSelectorMut<'a> {
     }
 
     pub fn replace_with<F>(&mut self, fun: &mut F) -> Result<&mut Self, JsonPathError>
-        where
-            F: FnMut(Value) -> Option<Value>,
+    where
+        F: FnMut(Value) -> Option<Value>,
     {
         let result = self.select()?;
         let paths = self.compute_paths(result);
@@ -551,8 +580,8 @@ impl<'a> JsonSelectorMut<'a> {
     }
 
     fn replace_value<F>(mut tokens: Vec<String>, value: &mut Value, fun: &mut F)
-        where
-            F: FnMut(Value) -> Option<Value>
+    where
+        F: FnMut(Value) -> Option<Value>,
     {
         let mut target = value;
 

@@ -1,5 +1,5 @@
 #![no_std]
-use sgx_tstd as std;
+extern crate sgx_tstd as std;
 
 use alloc::boxed::Box;
 use alloc::vec::Vec;

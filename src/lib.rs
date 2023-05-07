@@ -123,9 +123,9 @@
 //!             ]);
 //! ```
 #![doc(
-html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
-html_favicon_url = "https://www.rust-lang.org/static/images/favicon.ico",
-html_root_url = "https://docs.rs/env_logger/0.7.1"
+    html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
+    html_favicon_url = "https://www.rust-lang.org/static/images/favicon.ico",
+    html_root_url = "https://docs.rs/env_logger/0.7.1"
 )]
 #![cfg_attr(test, deny(warnings))]
 // When compiled for the rustc compiler itself we want to make sure that this is
@@ -133,13 +133,13 @@ html_root_url = "https://docs.rs/env_logger/0.7.1"
 #![cfg_attr(rustbuild, feature(staged_api, rustc_private))]
 #![cfg_attr(rustbuild, unstable(feature = "rustc_private", issue = "27812"))]
 #![deny(missing_debug_implementations, missing_docs, warnings)]
-
-#![cfg_attr(all(feature = "mesalock_sgx",
-not(target_env = "sgx")), no_std)]
-#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
-
+#![cfg_attr(all(feature = "mesalock_sgx", not(target_env = "sgx")), no_std)]
+#![cfg_attr(
+    all(target_env = "sgx", target_vendor = "mesalock"),
+    feature(rustc_private)
+)]
 #![no_std]
-use sgx_tstd as std;
+extern crate sgx_tstd as std;
 
 #[macro_use]
 extern crate log;
@@ -160,19 +160,16 @@ pub use parser::Parser;
 #[allow(deprecated)]
 pub use select::{Selector, SelectorMut};
 
-#[deprecated(
-since = "0.4.0",
-note = "It will be move to common module. since 0.5"
-)]
+#[deprecated(since = "0.4.0", note = "It will be move to common module. since 0.5")]
 pub use select::JsonPathError;
 
-pub use selector::{JsonSelector, JsonSelectorMut};
 pub use paths::PathParser;
+pub use selector::{JsonSelector, JsonSelectorMut};
 
 #[doc(hidden)]
 #[deprecated(
-since = "0.4.0",
-note = "'ffi' is moved to another location like 'wasm' from version 0.5.x"
+    since = "0.4.0",
+    note = "'ffi' is moved to another location like 'wasm' from version 0.5.x"
 )]
 mod ffi;
 #[doc(hidden)]
@@ -187,7 +184,9 @@ impl From<&paths::TokenError> for JsonPathError {
     fn from(e: &paths::TokenError) -> Self {
         match e {
             paths::TokenError::Eof => JsonPathError::Path("Eof".to_string()),
-            paths::TokenError::Position(pos) => JsonPathError::Path(["Position:", &pos.to_string()].concat())
+            paths::TokenError::Position(pos) => {
+                JsonPathError::Path(["Position:", &pos.to_string()].concat())
+            }
         }
     }
 }
@@ -220,8 +219,8 @@ impl From<&paths::TokenError> for JsonPathError {
 /// ]);
 /// ```
 #[deprecated(
-since = "0.2.5",
-note = "Please use the PathCompiled::compile function instead. It will be removed from 0.4.1"
+    since = "0.2.5",
+    note = "Please use the PathCompiled::compile function instead. It will be removed from 0.4.1"
 )]
 pub fn compile(path: &str) -> impl FnMut(&Value) -> Result<Vec<&Value>, JsonPathError> {
     #[allow(deprecated)]
@@ -271,11 +270,17 @@ pub fn compile(path: &str) -> impl FnMut(&Value) -> Result<Vec<&Value>, JsonPath
 /// ]);
 /// ```
 #[allow(clippy::needless_lifetimes)]
-pub fn selector<'a>(json: &'a Value) -> impl FnMut(&'a str) -> Result<Vec<&'a Value>, JsonPathError> {
+pub fn selector<'a>(
+    json: &'a Value,
+) -> impl FnMut(&'a str) -> Result<Vec<&'a Value>, JsonPathError> {
     let mut selector = JsonSelector::default();
     move |path| {
         let parser = PathParser::compile(path).map_err(|e| JsonPathError::from(&e))?;
-        selector.reset_parser(parser).value(json).reset_value().select()
+        selector
+            .reset_parser(parser)
+            .value(json)
+            .reset_value()
+            .select()
     }
 }
 
@@ -325,9 +330,9 @@ pub fn selector<'a>(json: &'a Value) -> impl FnMut(&'a str) -> Result<Vec<&'a Va
 ///
 /// assert_eq!(json, ret);
 /// ```
-pub fn selector_as<'a, T: serde::de::DeserializeOwned>(json: &'a Value)
-                                                   -> impl FnMut(&'a str) -> Result<Vec<T>, JsonPathError> + '_
-{
+pub fn selector_as<'a, T: serde::de::DeserializeOwned>(
+    json: &'a Value,
+) -> impl FnMut(&'a str) -> Result<Vec<T>, JsonPathError> + '_ {
     let mut selector = JsonSelector::default();
     let _ = selector.value(json);
     move |path: &str| {
@@ -525,8 +530,8 @@ pub fn delete(value: Value, path: &str) -> Result<Value, JsonPathError> {
 /// ]}));
 /// ```
 pub fn replace_with<F>(value: Value, path: &str, fun: &mut F) -> Result<Value, JsonPathError>
-    where
-        F: FnMut(Value) -> Option<Value>,
+where
+    F: FnMut(Value) -> Option<Value>,
 {
     let parser = PathParser::compile(path).map_err(|e| JsonPathError::from(&e))?;
     let mut selector = JsonSelectorMut::new(parser);
@@ -577,10 +582,7 @@ pub fn replace_with<F>(value: Value, path: &str, fun: &mut F) -> Result<Value, J
 /// ]);
 /// ```
 #[derive(Clone, Debug)]
-#[deprecated(
-since = "0.4.0",
-note = "Please use PathCompiled."
-)]
+#[deprecated(since = "0.4.0", note = "Please use PathCompiled.")]
 pub struct Compiled {
     #[allow(deprecated)]
     node: Node,
@@ -593,9 +595,7 @@ impl Compiled {
     /// If parsing the path fails, it will return an error.
     pub fn compile(path: &str) -> Result<Self, String> {
         let node = parser::Parser::compile(path)?;
-        Ok(Self {
-            node
-        })
+        Ok(Self { node })
     }
 
     /// Execute the select operation on the pre-compiled path.
@@ -659,7 +659,7 @@ impl<'a> PathCompiled<'a> {
     pub fn compile(path: &str) -> Result<PathCompiled, JsonPathError> {
         let parser = PathParser::compile(path).map_err(|e| JsonPathError::from(&e))?;
         Ok(PathCompiled {
-            parser: Rc::new(parser)
+            parser: Rc::new(parser),
         })
     }
 

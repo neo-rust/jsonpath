@@ -1,5 +1,5 @@
-use alloc::vec::Vec;
 use super::str_reader::StrRange;
+use alloc::vec::Vec;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {

@@ -3,6 +3,7 @@ mod tokenizer;
 
 use alloc::boxed::Box;
 use alloc::string::String;
+use alloc::vec;
 use alloc::vec::Vec;
 #[cfg(feature = "mesalock_sgx")]
 use sgx_tstd as std;
@@ -20,8 +21,8 @@ mod utils {
     use std::str::FromStr;
 
     pub fn string_to_num<F, S: FromStr>(string: &str, msg_handler: F) -> Result<S, String>
-        where
-            F: Fn() -> String,
+    where
+        F: Fn() -> String,
     {
         match string.parse() {
             Ok(n) => Ok(n),
@@ -488,14 +489,15 @@ impl Parser {
         let node = Self::term(tokenizer)?;
         Self::eat_whitespace(tokenizer);
 
-        if matches!(tokenizer.peek_token(),
+        if matches!(
+            tokenizer.peek_token(),
             Ok(Token::Equal(_))
-            | Ok(Token::NotEqual(_))
-            | Ok(Token::Little(_))
-            | Ok(Token::LittleOrEqual(_))
-            | Ok(Token::Greater(_))
-            | Ok(Token::GreaterOrEqual(_)))
-        {
+                | Ok(Token::NotEqual(_))
+                | Ok(Token::Little(_))
+                | Ok(Token::LittleOrEqual(_))
+                | Ok(Token::Greater(_))
+                | Ok(Token::GreaterOrEqual(_))
+        ) {
             Self::op(node, tokenizer)
         } else if has_prop_candidate {
             Ok(node)
@@ -550,21 +552,15 @@ impl Parser {
                     _ => Self::paths(node, tokenizer),
                 }
             }
-            Ok(Token::Absolute(_)) => {
-                Self::json_path(tokenizer)
-            }
+            Ok(Token::Absolute(_)) => Self::json_path(tokenizer),
             Ok(Token::DoubleQuoted(_, _)) | Ok(Token::SingleQuoted(_, _)) => {
                 Self::array_quote_value(tokenizer)
             }
-            Ok(Token::Key(_, key)) => {
-                match key.as_bytes()[0] {
-                    b'-' | b'0'..=b'9' => Self::term_num(tokenizer),
-                    _ => Self::boolean(tokenizer),
-                }
-            }
-            _ => {
-                Err(tokenizer.err_msg())
-            }
+            Ok(Token::Key(_, key)) => match key.as_bytes()[0] {
+                b'-' | b'0'..=b'9' => Self::term_num(tokenizer),
+                _ => Self::boolean(tokenizer),
+            },
+            _ => Err(tokenizer.err_msg()),
         }
     }
 

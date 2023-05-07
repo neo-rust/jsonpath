@@ -1,5 +1,6 @@
 use alloc::string::String;
 use alloc::vec::Vec;
+use alloc::{format, vec};
 #[cfg(feature = "mesalock_sgx")]
 use sgx_tstd as std;
 
@@ -110,23 +111,9 @@ impl<'a> Tokenizer<'a> {
 
     fn dolla(&mut self, pos: usize, ch: char) -> Result<Token, TokenError> {
         let fun = |c: &char| match c {
-            &CH_DOT
-            | &CH_ASTERISK
-            | &CH_LARRAY
-            | &CH_RARRAY
-            | &CH_LPAREN
-            | &CH_RPAREN
-            | &CH_AT
-            | &CH_QUESTION
-            | &CH_COMMA
-            | &CH_SEMICOLON
-            | &CH_LITTLE
-            | &CH_GREATER
-            | &CH_EQUAL
-            | &CH_AMPERSAND
-            | &CH_PIPE
-            | &CH_EXCLAMATION
-            => false,
+            &CH_DOT | &CH_ASTERISK | &CH_LARRAY | &CH_RARRAY | &CH_LPAREN | &CH_RPAREN | &CH_AT
+            | &CH_QUESTION | &CH_COMMA | &CH_SEMICOLON | &CH_LITTLE | &CH_GREATER | &CH_EQUAL
+            | &CH_AMPERSAND | &CH_PIPE | &CH_EXCLAMATION => false,
             _ => !c.is_whitespace(),
         };
         let (_, mut vec) = self.input.take_while(fun).map_err(to_token_error)?;
@@ -248,24 +235,9 @@ impl<'a> Tokenizer<'a> {
 
     fn other(&mut self, pos: usize, ch: char) -> Result<Token, TokenError> {
         let fun = |c: &char| match c {
-            &CH_DOLLA
-            | &CH_DOT
-            | &CH_ASTERISK
-            | &CH_LARRAY
-            | &CH_RARRAY
-            | &CH_LPAREN
-            | &CH_RPAREN
-            | &CH_AT
-            | &CH_QUESTION
-            | &CH_COMMA
-            | &CH_SEMICOLON
-            | &CH_LITTLE
-            | &CH_GREATER
-            | &CH_EQUAL
-            | &CH_AMPERSAND
-            | &CH_PIPE
-            | &CH_EXCLAMATION
-            => false,
+            &CH_DOLLA | &CH_DOT | &CH_ASTERISK | &CH_LARRAY | &CH_RARRAY | &CH_LPAREN
+            | &CH_RPAREN | &CH_AT | &CH_QUESTION | &CH_COMMA | &CH_SEMICOLON | &CH_LITTLE
+            | &CH_GREATER | &CH_EQUAL | &CH_AMPERSAND | &CH_PIPE | &CH_EXCLAMATION => false,
             _ => !c.is_whitespace(),
         };
         let (_, mut vec) = self.input.take_while(fun).map_err(to_token_error)?;
