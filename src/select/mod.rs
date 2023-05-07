@@ -2,6 +2,7 @@
 extern crate sgx_tstd as std;
 
 use alloc::borrow::ToOwned;
+use alloc::{format, vec};
 use alloc::string::{String, ToString};
 use alloc::vec::Vec;
 
