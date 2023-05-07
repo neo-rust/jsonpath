@@ -138,11 +138,9 @@ html_root_url = "https://docs.rs/env_logger/0.7.1"
 not(target_env = "sgx")), no_std)]
 #![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
 
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
+#![no_std]
+use sgx_tstd as std;
 
-extern crate core;
 #[macro_use]
 extern crate log;
 extern crate serde;
