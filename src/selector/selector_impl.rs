@@ -1,6 +1,7 @@
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
+#[cfg(feature = "mesalock_sgx")]
+use sgx_tstd as std;
 
 use std::collections::HashSet;
 use std::rc::Rc;

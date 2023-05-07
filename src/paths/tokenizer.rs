@@ -1,6 +1,6 @@
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
+use alloc::vec::Vec;
+#[cfg(feature = "mesalock_sgx")]
+use sgx_tstd as std;
 use std::result::Result;
 
 use super::str_reader::{ReaderError, StrRange, StrReader};
@@ -313,6 +313,7 @@ impl<'a> TokenReader<'a> {
 
 #[cfg(test)]
 mod tokenizer_tests {
+    use alloc::vec::Vec;
     use paths::str_reader::StrRange;
     use paths::tokenizer::{TokenError, TokenReader};
     use paths::tokens::Token;

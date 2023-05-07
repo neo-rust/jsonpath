@@ -1,6 +1,6 @@
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
+use alloc::vec::Vec;
+#[cfg(feature = "mesalock_sgx")]
+use sgx_tstd as std;
 
 use serde_json::Value;
 
@@ -216,6 +216,7 @@ impl Cmp for CmpOr {
 
 #[cfg(test)]
 mod cmp_inner_tests {
+    use alloc::string::ToString;
     use serde_json::Value;
 
     use selector::cmp::*;

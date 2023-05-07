@@ -1,9 +1,11 @@
 mod path_reader;
 mod tokenizer;
 
-#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
-#[macro_use]
-extern crate sgx_tstd as std;
+use alloc::boxed::Box;
+use alloc::string::String;
+use alloc::vec::Vec;
+#[cfg(feature = "mesalock_sgx")]
+use sgx_tstd as std;
 
 use std::str::FromStr;
 
@@ -14,6 +16,7 @@ const DUMMY: usize = 0;
 type ParseResult<T> = Result<T, String>;
 
 mod utils {
+    use alloc::string::String;
     use std::str::FromStr;
 
     pub fn string_to_num<F, S: FromStr>(string: &str, msg_handler: F) -> Result<S, String>
