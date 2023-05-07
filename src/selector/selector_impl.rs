@@ -93,7 +93,7 @@ impl<'a> JsonSelector<'a> {
                 //     }
                 // }
                 for v in vec {
-                    match serde_json::from_value::<T>(**v.clone()) {
+                    match serde_json::from_value::<T>(v.clone()) {
                         Ok(v) => ret.push(v),
                         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
                     }

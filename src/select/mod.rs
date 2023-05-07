@@ -436,7 +436,7 @@ impl<'a, 'b> Selector<'a, 'b> {
             Some(vec) => {
                 let mut ret = Vec::new();
                 for v in vec {
-                    match serde_json::from_value::<T>(**v.clone()) {
+                    match serde_json::from_value::<T>(v.clone()) {
                         Ok(v) => ret.push(v),
                         Err(e) => return Err(JsonPathError::Serde(e.to_string())),
                     }
