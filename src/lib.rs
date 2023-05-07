@@ -122,6 +122,11 @@
 //!                 &json!({"category" : "fiction","author" : "Herman Melville","title" : "Moby Dick","isbn" : "0-553-21311-3","price" : 8.99})
 //!             ]);
 //! ```
+#![cfg_attr(all(feature = "mesalock_sgx",
+not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
+
+
 extern crate core;
 #[macro_use]
 extern crate log;
@@ -132,6 +137,9 @@ extern crate serde_json_sgx as serde_json;
 #[macro_use]
 extern crate sgx_tstd as std;
 
+extern crate alloc;
+
+use alloc::rc::Rc;
 use serde_json::Value;
 
 #[allow(deprecated)]
@@ -149,7 +157,6 @@ pub use select::JsonPathError;
 
 pub use selector::{JsonSelector, JsonSelectorMut};
 pub use paths::PathParser;
-use std::rc::Rc;
 
 #[doc(hidden)]
 #[deprecated(
