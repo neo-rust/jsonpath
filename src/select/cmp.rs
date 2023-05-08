@@ -1,209 +1,208 @@
-use std::vec;
 use serde_json::Value;
-use std::vec::Vec;
+use std::{vec, vec::Vec};
 
 pub(super) trait Cmp {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool;
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool;
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool;
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool;
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool;
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool;
 
-    fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value>;
+	fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value>;
 
-    fn default(&self) -> bool {
-        false
-    }
+	fn default(&self) -> bool {
+		false
+	}
 }
 
 pub(super) struct CmpEq;
 
 impl Cmp for CmpEq {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 == v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 == v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        (v1 - v2).abs() == 0_f64
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		(v1 - v2).abs() == 0_f64
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 == v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 == v2
+	}
 
-    fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
-        let mut ret = vec![];
+	fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
+		let mut ret = vec![];
 
-        for a in v1 {
-            for b in v2 {
-                if a == b {
-                    ret.push(*a);
-                }
-            }
-        }
+		for a in v1 {
+			for b in v2 {
+				if a == b {
+					ret.push(*a);
+				}
+			}
+		}
 
-        ret
-    }
+		ret
+	}
 }
 
 pub(super) struct CmpNe;
 
 impl Cmp for CmpNe {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 != v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 != v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        (v1 - v2).abs() != 0_f64
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		(v1 - v2).abs() != 0_f64
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 != v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 != v2
+	}
 
-    fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
-        let mut ret = vec![];
+	fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
+		let mut ret = vec![];
 
-        for a in v1 {
-            for b in v2 {
-                if a != b {
-                    ret.push(*a);
-                }
-            }
-        }
+		for a in v1 {
+			for b in v2 {
+				if a != b {
+					ret.push(*a);
+				}
+			}
+		}
 
-        ret
-    }
+		ret
+	}
 }
 
 pub(super) struct CmpGt;
 
 impl Cmp for CmpGt {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 & !v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 & !v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        v1 > v2
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		v1 > v2
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 > v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 > v2
+	}
 
-    fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
-        Vec::new()
-    }
+	fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
+		Vec::new()
+	}
 }
 
 pub(super) struct CmpGe;
 
 impl Cmp for CmpGe {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 >= v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 >= v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        v1 >= v2
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		v1 >= v2
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 >= v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 >= v2
+	}
 
-    fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
-        Vec::new()
-    }
+	fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
+		Vec::new()
+	}
 }
 
 pub(super) struct CmpLt;
 
 impl Cmp for CmpLt {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        !v1 & v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		!v1 & v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        v1 < v2
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		v1 < v2
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 < v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 < v2
+	}
 
-    fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
-        Vec::new()
-    }
+	fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
+		Vec::new()
+	}
 }
 
 pub(super) struct CmpLe;
 
 impl Cmp for CmpLe {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 <= v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 <= v2
+	}
 
-    fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
-        v1 <= v2
-    }
+	fn cmp_f64(&self, v1: f64, v2: f64) -> bool {
+		v1 <= v2
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        v1 <= v2
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		v1 <= v2
+	}
 
-    fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
-        Vec::new()
-    }
+	fn cmp_json<'a>(&self, _: &[&'a Value], _: &[&'a Value]) -> Vec<&'a Value> {
+		Vec::new()
+	}
 }
 
 pub(super) struct CmpAnd;
 
 impl Cmp for CmpAnd {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 && v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 && v2
+	}
 
-    fn cmp_f64(&self, _v1: f64, _v2: f64) -> bool {
-        true
-    }
+	fn cmp_f64(&self, _v1: f64, _v2: f64) -> bool {
+		true
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        !v1.is_empty() && !v2.is_empty()
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		!v1.is_empty() && !v2.is_empty()
+	}
 
-    fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
-        CmpEq.cmp_json(v1, v2)
-    }
+	fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
+		CmpEq.cmp_json(v1, v2)
+	}
 }
 
 pub(super) struct CmpOr;
 
 impl Cmp for CmpOr {
-    fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
-        v1 || v2
-    }
+	fn cmp_bool(&self, v1: bool, v2: bool) -> bool {
+		v1 || v2
+	}
 
-    fn cmp_f64(&self, _v1: f64, _v2: f64) -> bool {
-        true
-    }
+	fn cmp_f64(&self, _v1: f64, _v2: f64) -> bool {
+		true
+	}
 
-    fn cmp_string(&self, v1: &str, v2: &str) -> bool {
-        !v1.is_empty() || !v2.is_empty()
-    }
+	fn cmp_string(&self, v1: &str, v2: &str) -> bool {
+		!v1.is_empty() || !v2.is_empty()
+	}
 
-    fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
-        let mut ret = [v1, v2].concat();
+	fn cmp_json<'a>(&self, v1: &[&'a Value], v2: &[&'a Value]) -> Vec<&'a Value> {
+		let mut ret = [v1, v2].concat();
 
-        for x in (0..ret.len()).rev() {
-            for y in (x + 1..ret.len()).rev() {
-                if ret[x] == ret[y] {
-                    ret.remove(y);
-                }
-            }
-        }
+		for x in (0..ret.len()).rev() {
+			for y in (x + 1..ret.len()).rev() {
+				if ret[x] == ret[y] {
+					ret.remove(y);
+				}
+			}
+		}
 
-        ret
-    }
+		ret
+	}
 }
 
 // #[cfg(test)]

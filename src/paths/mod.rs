@@ -1,11 +1,7 @@
-#![no_std]
-use sgx_tstd::prelude::v1::*;
-
-pub use self::parser_node_visitor::ParserNodeVisitor;
-pub use self::parser_token_handler::ParserTokenHandler;
-pub use self::path_parser::PathParser;
-pub use self::str_reader::StrRange;
-pub use self::tokenizer::TokenError;
+pub use self::{
+	parser_node_visitor::ParserNodeVisitor, parser_token_handler::ParserTokenHandler,
+	path_parser::PathParser, str_reader::StrRange, tokenizer::TokenError,
+};
 
 mod parser_node_visitor;
 mod parser_token_handler;

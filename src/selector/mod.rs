@@ -1,6 +1,3 @@
-#![no_std]
-use sgx_tstd::prelude::v1::*;
-
 pub use self::selector_impl::{JsonSelector, JsonSelectorMut};
 
 mod cmp;
