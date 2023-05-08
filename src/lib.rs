@@ -143,7 +143,7 @@ extern crate sgx_tstd as std;
 
 #[macro_use]
 extern crate log;
-extern crate serde;
+extern crate serde_sgx as serde;
 extern crate serde_json_sgx as serde_json;
 
 extern crate alloc;
