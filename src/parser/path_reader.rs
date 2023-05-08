@@ -1,7 +1,5 @@
 #![no_std]
 use sgx_tstd::prelude::v1::*;
-
-use sgx_alloc::string::String;
 use std::result::Result;
 
 #[derive(Debug, PartialEq)]
