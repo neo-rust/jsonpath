@@ -10,9 +10,8 @@ extern crate serde_json_sgx as serde_json;
 use serde_json::map::Entry;
 use serde_json::{Number, Value};
 
-use parser::*;
+use crate::parser::*;
 use crate::Parser;
-use crate::parser::{FilterToken, Node, NodeVisitor, ParseToken};
 
 use self::expr_term::*;
 use self::value_walker::ValueWalker;

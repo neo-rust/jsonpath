@@ -1,8 +1,8 @@
 use crate::select::cmp::*;
-use crate::select::{to_f64, FilterKey};
 use serde_json::{Number, Value};
 use std::string::String;
 use std::vec::Vec;
+use crate::select::{FilterKey, to_f64};
 
 #[derive(Debug, PartialEq)]
 pub(super) enum ExprTerm<'a> {
