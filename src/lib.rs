@@ -122,11 +122,11 @@
 //!                 &json!({"category" : "fiction","author" : "Herman Melville","title" : "Moby Dick","isbn" : "0-553-21311-3","price" : 8.99})
 //!             ]);
 //! ```
-#![doc(
-    html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
-    html_favicon_url = "https://www.rust-lang.org/static/images/favicon.ico",
-    html_root_url = "https://docs.rs/env_logger/0.7.1"
-)]
+// #![doc(
+//     html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
+//     html_favicon_url = "https://www.rust-lang.org/static/images/favicon.ico",
+//     html_root_url = "https://docs.rs/env_logger/0.7.1"
+// )]
 #![cfg_attr(test, deny(warnings))]
 // When compiled for the rustc compiler itself we want to make sure that this is
 // an unstable crate
@@ -148,7 +148,6 @@ extern crate sgx_tstd as std;
 extern crate sgx_tstd;
 
 #[macro_use]
-extern crate log;
 extern crate serde_sgx as serde;
 extern crate serde_json_sgx as serde_json;
 

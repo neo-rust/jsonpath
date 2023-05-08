@@ -297,7 +297,7 @@ mod tokenizer_tests {
     use paths::tokens::Token;
 
     fn setup() {
-        let _ = env_logger::try_init();
+        // let _ = env_logger::try_init();
     }
 
     fn collect_token(input: &str) -> (Vec<Token>, Option<TokenError>) {

@@ -659,7 +659,7 @@ mod path_parser_tests {
     }
 
     fn setup() {
-        let _ = env_logger::try_init();
+        // let _ = env_logger::try_init();
     }
 
     fn run(input: &str) -> Result<Vec<ParseToken>, String> {
