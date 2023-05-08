@@ -9,7 +9,7 @@ use alloc::{format, vec};
 use std::collections::HashSet;
 use std::fmt;
 
-extern crate serde;
+extern crate serde_sgx as serde;
 extern crate serde_json_sgx as serde_json;
 
 use serde_json::map::Entry;
