@@ -1,9 +1,19 @@
+#[cfg(feature = "sgx")]
 use sgx_tstd as std;
+#[cfg(feature = "sgx")]
 use sgx_tstd::prelude::v1::*;
-use std::collections::HashSet;
+#[cfg(not(feature = "sgx"))]
+use std;
 
+#[cfg(not(feature = "sgx"))]
+use serde_json;
+use std::collections::HashSet;
+#[cfg(feature = "sgx")]
+extern crate serde_sgx as serde;
 use super::utils;
 use crate::selector::utils::PathKey;
+#[cfg(not(feature = "sgx"))]
+use serde;
 use serde_json::Value;
 
 pub(super) struct ValueWalker;

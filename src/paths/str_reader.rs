@@ -1,4 +1,9 @@
+#[cfg(feature = "sgx")]
 use sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
 
 use std::{result::Result, str::Chars};
 

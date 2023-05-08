@@ -1,5 +1,11 @@
 use crate::{parser, select, select_as_str};
+#[cfg(feature = "sgx")]
+use sgx_tstd as std;
+#[cfg(feature = "sgx")]
 use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
+
 use std::{
 	ffi::{CStr, CString},
 	os::raw::{c_char, c_void},

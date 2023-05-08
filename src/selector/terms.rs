@@ -1,10 +1,20 @@
+#[cfg(feature = "sgx")]
 use sgx_tstd as std;
+#[cfg(feature = "sgx")]
 use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
+
 use std::vec;
 
+#[cfg(not(feature = "sgx"))]
+use serde_json;
 use std::collections::HashSet;
-
+#[cfg(feature = "sgx")]
+extern crate serde_sgx as serde;
 use super::{cmp::*, utils, value_walker::ValueWalker};
+#[cfg(not(feature = "sgx"))]
+use serde;
 use serde_json::{Number, Value};
 
 #[derive(Debug, PartialEq)]

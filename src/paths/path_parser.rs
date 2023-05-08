@@ -1,3 +1,10 @@
+#[cfg(feature = "sgx")]
+use sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
+
 use super::{
 	parser_node_visitor::ParserNodeVisitor,
 	parser_token_handler::ParserTokenHandler,
@@ -5,7 +12,6 @@ use super::{
 	tokenizer::{TokenError, TokenReader},
 	tokens::{FilterToken, ParseToken, Token},
 };
-use sgx_tstd::prelude::v1::*;
 use std::{str::FromStr, vec};
 
 #[derive(Clone, Debug)]

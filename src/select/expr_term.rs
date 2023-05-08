@@ -1,4 +1,16 @@
+#[cfg(not(feature = "sgx"))]
+use serde_json;
+#[cfg(feature = "sgx")]
+use sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
+#[cfg(feature = "sgx")]
+extern crate serde_sgx as serde;
 use crate::select::{cmp::*, to_f64, FilterKey};
+#[cfg(not(feature = "sgx"))]
+use serde;
 use serde_json::{Number, Value};
 use std::{string::String, vec::Vec};
 

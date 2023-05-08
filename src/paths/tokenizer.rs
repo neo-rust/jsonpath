@@ -2,7 +2,12 @@ use super::{
 	str_reader::{ReaderError, StrRange, StrReader},
 	tokens::Token,
 };
+#[cfg(feature = "sgx")]
 use sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
 use std::result::Result;
 
 const CH_DOLLA: char = '$';
@@ -272,6 +277,7 @@ impl<'a> TokenReader<'a> {
 	}
 }
 
+#[cfg(feature = "std")]
 #[cfg(test)]
 mod tokenizer_tests {
 	use crate::paths::{

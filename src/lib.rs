@@ -124,12 +124,20 @@
 //! ```
 #![allow(missing_docs)]
 #![no_std]
+
+#[cfg(feature = "sgx")]
 extern crate sgx_tstd as std;
+#[cfg(feature = "std")]
+use std;
 
-extern crate serde_json_sgx as serde_json;
-extern crate serde_sgx as serde;
-
+#[cfg(feature = "sgx")]
 extern crate sgx_alloc as alloc;
+#[cfg(not(feature = "sgx"))]
+use serde_json;
+#[cfg(feature = "sgx")]
+extern crate serde_sgx as serde;
+#[cfg(not(feature = "sgx"))]
+use serde;
 
 use serde_json::Value;
 use std::{

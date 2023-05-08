@@ -1,5 +1,12 @@
-use super::path_reader::{PathReader, ReaderError};
+#[cfg(feature = "sgx")]
 use sgx_tstd as std;
+#[cfg(feature = "sgx")]
+use sgx_tstd::prelude::v1::*;
+#[cfg(not(feature = "sgx"))]
+use std;
+
+use super::path_reader::{PathReader, ReaderError};
+
 use std::{format, result::Result, string::String, vec, vec::Vec};
 
 const CH_DOLLA: char = '$';
