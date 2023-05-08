@@ -2,7 +2,7 @@
 use alloc::vec;
 use alloc::vec::Vec;
 use serde_json::Value;
-
+#[macro_use]
 extern crate sgx_tstd as std;
 use std::collections::HashSet;
 

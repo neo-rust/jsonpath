@@ -1,8 +1,10 @@
+#![no_std]
 extern crate jsonpath_lib as jsonpath;
 extern crate serde;
 extern crate serde_json_sgx as serde_json;
 
-#![no_std]
+
+#[macro_use]
 extern crate sgx_tstd as std;
 
 use std::io::Read;

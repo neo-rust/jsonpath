@@ -1,6 +1,6 @@
 #![no_std]
 use alloc::vec::Vec;
-
+#[macro_use]
 extern crate sgx_tstd as std;
 
 use serde_json::Value;

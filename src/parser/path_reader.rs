@@ -1,5 +1,6 @@
 #![no_std]
 use alloc::vec::Vec;
+#[macro_use]
 extern crate sgx_tstd as std;
 
 use alloc::string::String;
