@@ -19,7 +19,7 @@ travis-ci = { repository = "freestrings/jsonpath", branch = "master" }
 
 [features]
 default = ["mesalock_sgx"]
-mesalock_sgx = ["serde-sgx","serde_json_sgx", "sgx_tstd"]
+mesalock_sgx = ["serde-sgx","serde_json-sgx", "sgx_tstd"]
 
 
 # Provide integration for heap-allocated collections without depending on the
