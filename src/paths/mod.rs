@@ -1,6 +1,5 @@
 #![no_std]
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 pub use self::parser_node_visitor::ParserNodeVisitor;
 pub use self::parser_token_handler::ParserTokenHandler;

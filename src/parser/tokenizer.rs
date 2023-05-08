@@ -2,8 +2,7 @@
 use alloc::string::String;
 use alloc::vec::Vec;
 use alloc::{format, vec};
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 use std::result::Result;
 

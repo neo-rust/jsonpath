@@ -1,7 +1,6 @@
 #![no_std]
 use alloc::vec::Vec;
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 use std::collections::HashSet;
 
 use super::utils;

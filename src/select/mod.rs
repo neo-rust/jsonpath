@@ -1,6 +1,5 @@
 #![no_std]
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 use alloc::borrow::ToOwned;
 use alloc::string::{String, ToString};

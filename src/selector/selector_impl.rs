@@ -4,8 +4,7 @@ use alloc::vec;
 use alloc::vec::Vec;
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 use std::collections::HashSet;
 use std::rc::Rc;

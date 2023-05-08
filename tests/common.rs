@@ -1,6 +1,5 @@
 #![no_std]
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 extern crate env_logger;
 extern crate jsonpath_sgx as jsonpath;

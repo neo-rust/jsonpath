@@ -2,8 +2,7 @@
 use alloc::vec;
 use alloc::vec::Vec;
 use serde_json::Value;
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 use std::collections::HashSet;
 
 pub(super) struct ValueWalker;

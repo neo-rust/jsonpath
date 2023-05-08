@@ -4,8 +4,7 @@ extern crate serde;
 extern crate serde_json_sgx as serde_json;
 
 
-#[macro_use]
-extern crate sgx_tstd as std;
+use sgx_tstd::prelude::v1::*;
 
 use std::io::Read;
 
