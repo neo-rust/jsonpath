@@ -1,8 +1,8 @@
 #![no_std]
 use sgx_tstd::prelude::v1::*;
 
-use alloc::boxed::Box;
-use alloc::vec::Vec;
+use sgx_alloc::boxed::Box;
+use sgx_alloc::vec::Vec;
 
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_void};

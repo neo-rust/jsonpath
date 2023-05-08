@@ -152,11 +152,12 @@ extern crate log;
 extern crate serde_sgx as serde;
 extern crate serde_json_sgx as serde_json;
 
-extern crate alloc;
+extern crate sgx_alloc;
+extern crate sgx_alloc as alloc;
 
-use alloc::rc::Rc;
-use alloc::string::{String, ToString};
-use alloc::vec::Vec;
+use sgx_alloc::rc::Rc;
+use sgx_alloc::string::{String, ToString};
+use sgx_alloc::vec::Vec;
 use serde_json::Value;
 
 #[allow(deprecated)]

@@ -1,6 +1,6 @@
 #![no_std]
-use alloc::vec;
-use alloc::vec::Vec;
+use sgx_alloc::vec;
+use sgx_alloc::vec::Vec;
 use sgx_tstd::prelude::v1::*;
 
 use std::collections::HashSet;
@@ -601,8 +601,8 @@ impl<'a> FilterTerms<'a> {
 
 #[cfg(test)]
 mod expr_term_inner_tests {
-    use alloc::string::ToString;
-    use alloc::vec;
+    use sgx_alloc::string::ToString;
+    use sgx_alloc::vec;
     use serde_json::{Number, Value};
 
     use selector::terms::ExprTerm;

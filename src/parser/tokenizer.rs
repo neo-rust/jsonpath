@@ -1,7 +1,7 @@
 #![no_std]
-use alloc::string::String;
-use alloc::vec::Vec;
-use alloc::{format, vec};
+use sgx_alloc::string::String;
+use sgx_alloc::vec::Vec;
+use sgx_alloc::{format, vec};
 use sgx_tstd::prelude::v1::*;
 
 use std::result::Result;

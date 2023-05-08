@@ -1,10 +1,10 @@
 #![no_std]
 use sgx_tstd::prelude::v1::*;
 
-use alloc::borrow::ToOwned;
-use alloc::string::{String, ToString};
-use alloc::vec::Vec;
-use alloc::{format, vec};
+use sgx_alloc::borrow::ToOwned;
+use sgx_alloc::string::{String, ToString};
+use sgx_alloc::vec::Vec;
+use sgx_alloc::{format, vec};
 
 use std::collections::HashSet;
 use std::fmt;

@@ -1,5 +1,5 @@
 #![no_std]
-use alloc::vec::Vec;
+use sgx_alloc::vec::Vec;
 use sgx_tstd::prelude::v1::*;
 
 use std::result::Result;

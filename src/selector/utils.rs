@@ -1,4 +1,4 @@
-use alloc::string::String;
+use sgx_alloc::string::String;
 use serde_json::Number;
 
 pub fn to_f64(n: &Number) -> f64 {

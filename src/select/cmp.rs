@@ -1,5 +1,5 @@
-use alloc::vec;
-use alloc::vec::Vec;
+use sgx_alloc::vec;
+use sgx_alloc::vec::Vec;
 use serde_json::Value;
 
 pub(super) trait Cmp {

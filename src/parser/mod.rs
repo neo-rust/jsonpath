@@ -4,10 +4,10 @@ use sgx_tstd::prelude::v1::*;
 mod path_reader;
 mod tokenizer;
 
-use alloc::boxed::Box;
-use alloc::string::String;
-use alloc::vec;
-use alloc::vec::Vec;
+use sgx_alloc::boxed::Box;
+use sgx_alloc::string::String;
+use sgx_alloc::vec;
+use sgx_alloc::vec::Vec;
 
 use std::str::FromStr;
 
@@ -18,7 +18,7 @@ const DUMMY: usize = 0;
 type ParseResult<T> = Result<T, String>;
 
 mod utils {
-    use alloc::string::String;
+    use sgx_alloc::string::String;
     use std::str::FromStr;
 
     pub fn string_to_num<F, S: FromStr>(string: &str, msg_handler: F) -> Result<S, String>

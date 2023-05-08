@@ -1,5 +1,5 @@
 #![no_std]
-use alloc::vec::Vec;
+use sgx_alloc::vec::Vec;
 use sgx_tstd::prelude::v1::*;
 
 use serde_json::Value;
@@ -215,8 +215,8 @@ impl Cmp for CmpOr {
 
 #[cfg(test)]
 mod cmp_inner_tests {
-    use alloc::string::ToString;
-    use alloc::vec;
+    use sgx_alloc::string::ToString;
+    use sgx_alloc::vec;
     use serde_json::Value;
 
     use selector::cmp::*;
