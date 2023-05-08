@@ -461,7 +461,7 @@ impl<'a> ParserTokenHandler<'a> for JsonSelector<'a> {
     where
         F: Fn(&StrRange) -> &'a str,
     {
-        debug!("token: {:?}, stack: {:?}", token, self.tokens);
+        // debug!("token: {:?}, stack: {:?}", token, self.tokens);
 
         if self.compute_absolute_path_filter(token, parse_value_reader) {
             return;
@@ -494,7 +494,7 @@ impl<'a> ParserTokenHandler<'a> for JsonSelector<'a> {
             ParseToken::Range(from, to, step) => self.visit_range(from, to, step),
             ParseToken::Union(indices) => self.visit_union(indices),
             ParseToken::Eof => {
-                debug!("visit_token eof");
+                // debug!("visit_token eof");
             }
         }
     }
@@ -658,7 +658,7 @@ impl<'a> JsonSelectorMut<'a> {
         visited: &mut HashSet<*const Value>,
         visited_order: &mut Vec<Vec<String>>,
     ) -> bool {
-        trace!("{:?}, {:?}", target, tokens);
+        // trace!("{:?}, {:?}", target, tokens);
 
         if target.is_empty() {
             return true;

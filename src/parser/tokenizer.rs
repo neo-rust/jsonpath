@@ -98,7 +98,7 @@ pub struct Tokenizer<'a> {
 
 impl<'a> Tokenizer<'a> {
     pub fn new(input: &'a str) -> Self {
-        trace!("input: {}", input);
+        // trace!("input: {}", input);
         Tokenizer {
             input: PathReader::new(input),
         }
@@ -305,11 +305,11 @@ impl<'a> TokenReader<'a> {
     pub fn peek_token(&self) -> Result<&Token, TokenError> {
         match self.tokens.last() {
             Some((_, t)) => {
-                trace!("%{:?}", t);
+                // trace!("%{:?}", t);
                 Ok(t)
             }
             _ => {
-                trace!("%{:?}", self.err);
+                // trace!("%{:?}", self.err);
                 Err(self.err.clone())
             }
         }
@@ -319,11 +319,11 @@ impl<'a> TokenReader<'a> {
         match self.tokens.pop() {
             Some((pos, t)) => {
                 self.curr_pos = Some(pos);
-                trace!("@{:?}", t);
+                // trace!("@{:?}", t);
                 Ok(t)
             }
             _ => {
-                trace!("@{:?}", self.err);
+                // trace!("@{:?}", self.err);
                 Err(self.err.clone())
             }
         }

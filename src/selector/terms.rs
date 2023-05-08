@@ -257,58 +257,58 @@ impl<'a> ExprTerm<'a> {
     }
 
     pub fn eq_(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("eq - {:?} : {:?}", &self, &other);
+        // debug!("eq - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpEq, &CmpEq);
-        debug!("eq = {:?}", expr);
+        // debug!("eq = {:?}", expr);
         expr
     }
 
     pub fn ne_(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("ne - {:?} : {:?}", &self, &other);
+        // debug!("ne - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpNe, &CmpNe);
-        debug!("ne = {:?}", expr);
+        // debug!("ne = {:?}", expr);
         expr
     }
 
     pub fn gt(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("gt - {:?} : {:?}", &self, &other);
+        // debug!("gt - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpGt, &CmpLt);
-        debug!("gt = {:?}", expr);
+        // debug!("gt = {:?}", expr);
         expr
     }
 
     pub fn ge(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("ge - {:?} : {:?}", &self, &other);
+        // debug!("ge - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpGe, &CmpLe);
-        debug!("ge = {:?}", expr);
+        // debug!("ge = {:?}", expr);
         expr
     }
 
     pub fn lt(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("lt - {:?} : {:?}", &self, &other);
+        // debug!("lt - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpLt, &CmpGt);
-        debug!("lt = {:?}", expr);
+        // debug!("lt = {:?}", expr);
         expr
     }
 
     pub fn le(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("le - {:?} : {:?}", &self, &other);
+        // debug!("le - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpLe, &CmpGe);
-        debug!("le = {:?}", expr);
+        // debug!("le = {:?}", expr);
         expr
     }
 
     pub fn and(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("and - {:?} : {:?}", &self, &other);
+        // debug!("and - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpAnd, &CmpAnd);
-        debug!("and = {:?}", expr);
+        // debug!("and = {:?}", expr);
         expr
     }
 
     pub fn or(&mut self, mut other: Self) -> ExprTerm<'a> {
-        debug!("or - {:?} : {:?}", &self, &other);
+        // debug!("or - {:?} : {:?}", &self, &other);
         let expr = self.cmp(&mut other, &CmpOr, &CmpOr);
-        debug!("or = {:?}", expr);
+        // debug!("or = {:?}", expr);
         expr
     }
 }
@@ -345,7 +345,7 @@ pub struct FilterTerms<'a>(pub Vec<Option<ExprTerm<'a>>>);
 impl<'a> FilterTerms<'a> {
     pub fn new_filter_context(&mut self) {
         self.0.push(None);
-        debug!("new_filter_context: {:?}", self.0);
+        // debug!("new_filter_context: {:?}", self.0);
     }
 
     pub fn is_term_empty(&self) -> bool {
@@ -365,7 +365,7 @@ impl<'a> FilterTerms<'a> {
     where
         F: Fn(&Vec<&'a Value>, &mut Option<HashSet<usize>>) -> FilterResult<'a>,
     {
-        debug!("filter_json_term: {:?}", e);
+        // debug!("filter_json_term: {:?}", e);
 
         if let ExprTerm::Json(rel, fk, vec) = e {
             let mut not_matched = Some(HashSet::new());
@@ -408,7 +408,7 @@ impl<'a> FilterTerms<'a> {
     where
         F: Fn(&Vec<&'a Value>, &mut Option<HashSet<usize>>) -> FilterResult<'a>,
     {
-        debug!("push_json_term: {:?}", &current);
+        // debug!("push_json_term: {:?}", &current);
 
         if let Some(current) = &current {
             let filter_result = fun(current, &mut None);
@@ -449,7 +449,7 @@ impl<'a> FilterTerms<'a> {
             collected: ValueWalker::all_with_str(vec, key),
         });
 
-        debug!("filter_all_with_str : {}, {:?}", key, self.0);
+        // debug!("filter_all_with_str : {}, {:?}", key, self.0);
         current
     }
 
@@ -485,7 +485,7 @@ impl<'a> FilterTerms<'a> {
             }
         });
 
-        debug!("filter_next_with_str : {}, {:?}", key, self.0);
+        // debug!("filter_next_with_str : {}, {:?}", key, self.0);
         current
     }
 
@@ -495,7 +495,7 @@ impl<'a> FilterTerms<'a> {
         index: f64,
     ) -> Option<Vec<&'a Value>> {
         if current.is_none() {
-            debug!("collect_next_with_num : {:?}, {:?}", &index, &current);
+            // debug!("collect_next_with_num : {:?}, {:?}", &index, &current);
             return current;
         }
 
@@ -535,7 +535,7 @@ impl<'a> FilterTerms<'a> {
         keys: &[&'a str],
     ) -> Option<Vec<&'a Value>> {
         if current.is_none() {
-            debug!("collect_next_with_str : {:?}, {:?}", keys, &current);
+            // debug!("collect_next_with_str : {:?}, {:?}", keys, &current);
             return current;
         }
 
@@ -550,7 +550,7 @@ impl<'a> FilterTerms<'a> {
 
     pub fn collect_next_all(&mut self, current: Option<Vec<&'a Value>>) -> Option<Vec<&'a Value>> {
         if current.is_none() {
-            debug!("collect_next_all : {:?}", &current);
+            // debug!("collect_next_all : {:?}", &current);
             return current;
         }
 
@@ -559,7 +559,7 @@ impl<'a> FilterTerms<'a> {
 
     pub fn collect_all(&mut self, current: Option<Vec<&'a Value>>) -> Option<Vec<&'a Value>> {
         if current.is_none() {
-            debug!("collect_all: {:?}", &current);
+            // debug!("collect_all: {:?}", &current);
             return current;
         }
 
@@ -572,7 +572,7 @@ impl<'a> FilterTerms<'a> {
         key: &'a str,
     ) -> Option<Vec<&'a Value>> {
         if current.is_none() {
-            debug!("collect_all_with_str: {}, {:?}", key, &current);
+            // debug!("collect_all_with_str: {}, {:?}", key, &current);
             return current;
         }
 
@@ -592,7 +592,7 @@ impl<'a> FilterTerms<'a> {
             }
         }
 
-        debug!("collect_all_with_num: {}, {:?}", index, &current);
+        // debug!("collect_all_with_num: {}, {:?}", index, &current);
         None
     }
 }

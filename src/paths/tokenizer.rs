@@ -44,7 +44,7 @@ pub(super) struct Tokenizer<'a> {
 
 impl<'a> Tokenizer<'a> {
     pub fn new(input: &'a str) -> Self {
-        trace!("input: {}", input);
+        // trace!("input: {}", input);
         Tokenizer {
             input: StrReader::new(input),
         }

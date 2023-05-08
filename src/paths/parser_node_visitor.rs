@@ -8,7 +8,7 @@ pub trait ParserNodeVisitor<'a> {
         F: ParserTokenHandler<'a>,
         F1: Fn(&StrRange) -> &'a str,
     {
-        trace!("visit {:?}", parse_node);
+        // trace!("visit {:?}", parse_node);
         match &parse_node.token {
             ParseToken::Absolute
             | ParseToken::Relative
