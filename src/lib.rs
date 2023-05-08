@@ -134,10 +134,11 @@
 #![cfg_attr(rustbuild, unstable(feature = "rustc_private", issue = "27812"))]
 #![deny(missing_debug_implementations, missing_docs, warnings)]
 // #![cfg_attr(all(feature = "mesalock_sgx", not(target_env = "sgx")), no_std)]
-// #![cfg_attr(
-//     all(target_env = "sgx", target_vendor = "mesalock"),
-//     feature(rustc_private)
-// )]
+#![cfg_attr(
+    all(target_env = "sgx"),
+    feature(rustc_private)
+)]
+#![cfg_attr(not(feature = "std"), no_std)]
 #![no_std]
 extern crate sgx_tstd as std;
 
