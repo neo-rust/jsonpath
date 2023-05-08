@@ -217,7 +217,7 @@ mod cmp_inner_tests {
     use std::vec;
     use serde_json::Value;
 
-    use selector::cmp::*;
+    use crate::selector::cmp::*;
 
     #[test]
     fn cmp_eq() {

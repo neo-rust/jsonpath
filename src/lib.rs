@@ -178,11 +178,8 @@ pub use selector::{JsonSelector, JsonSelectorMut};
     note = "'ffi' is moved to another location like 'wasm' from version 0.5.x"
 )]
 mod ffi;
-#[doc(hidden)]
 mod parser;
-#[doc(hidden)]
 mod select;
-
 mod paths;
 mod selector;
 

@@ -3,7 +3,7 @@ use sgx_tstd::prelude::v1::*;
 use std::collections::HashSet;
 
 use super::utils;
-use selector::utils::PathKey;
+use crate::selector::utils::PathKey;
 use serde_json::Value;
 
 pub(super) struct ValueWalker;

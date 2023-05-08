@@ -1,6 +1,6 @@
-use paths::path_parser::ParserNode;
-use paths::tokens::{FilterToken, ParseToken};
-use paths::{ParserTokenHandler, StrRange};
+use crate::paths::{ParserTokenHandler, StrRange};
+use crate::paths::path_parser::ParserNode;
+use crate::paths::tokens::{FilterToken, ParseToken};
 
 pub trait ParserNodeVisitor<'a> {
     fn visit<F, F1>(&self, parse_node: &ParserNode, token_handler: &mut F, parse_value_reader: &F1)

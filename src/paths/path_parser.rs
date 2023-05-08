@@ -623,10 +623,11 @@ mod path_parser_tests {
     use std::vec;
     use std::string::String;
     use std::vec::Vec;
-    use paths::path_parser::PathParser;
-    use paths::str_reader::StrRange;
-    use paths::tokens::{FilterToken, ParseToken};
-    use paths::ParserTokenHandler;
+    use crate::paths::path_parser::PathParser;
+    use crate::paths::str_reader::StrRange;
+    use crate::paths::tokens::{FilterToken, ParseToken};
+    use crate::paths::ParserTokenHandler;
+    use crate::paths::tokens::ParseToken;
 
     struct NodeVisitorTestImpl<'a> {
         input: &'a str,

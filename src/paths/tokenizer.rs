@@ -292,9 +292,9 @@ impl<'a> TokenReader<'a> {
 mod tokenizer_tests {
     use std::vec;
     use std::vec::Vec;
-    use paths::str_reader::StrRange;
-    use paths::tokenizer::{TokenError, TokenReader};
-    use paths::tokens::Token;
+    use crate::paths::str_reader::StrRange;
+    use crate::paths::tokenizer::{TokenError, TokenReader};
+    use crate::paths::tokens::Token;
 
     fn setup() {
         // let _ = env_logger::try_init();
