@@ -214,7 +214,6 @@ impl Cmp for CmpOr {
 
 #[cfg(test)]
 mod cmp_inner_tests {
-    use sgx_alloc::string::ToString;
     use std::vec;
     use serde_json::Value;
 

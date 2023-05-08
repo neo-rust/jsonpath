@@ -620,9 +620,7 @@ pub struct ParserNode {
 
 #[cfg(test)]
 mod path_parser_tests {
-    use sgx_alloc::string::String;
     use std::vec;
-    use sgx_alloc::vec::Vec;
     use std::string::String;
     use std::vec::Vec;
     use paths::path_parser::PathParser;

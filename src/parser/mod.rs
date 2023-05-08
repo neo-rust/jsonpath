@@ -12,8 +12,6 @@ const DUMMY: usize = 0;
 type ParseResult<T> = Result<T, String>;
 
 mod utils {
-    use alloc::string::String;
-    use sgx_alloc::string::String;
     use std::str::FromStr;
     use std::string::String;
 

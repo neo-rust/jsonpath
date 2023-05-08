@@ -599,7 +599,6 @@ impl<'a> FilterTerms<'a> {
 
 #[cfg(test)]
 mod expr_term_inner_tests {
-    use sgx_alloc::string::ToString;
     use std::vec;
     use serde_json::{Number, Value};
     use std::string::ToString;
