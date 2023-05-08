@@ -1,5 +1,5 @@
-use sgx_alloc::string::String;
 use serde_json::Number;
+use std::string::String;
 
 pub fn to_f64(n: &Number) -> f64 {
     if n.is_i64() {

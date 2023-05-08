@@ -155,10 +155,10 @@ extern crate serde_json_sgx as serde_json;
 extern crate sgx_alloc;
 extern crate sgx_alloc as alloc;
 
-use sgx_alloc::rc::Rc;
-use sgx_alloc::string::{String, ToString};
-use sgx_alloc::vec::Vec;
 use serde_json::Value;
+use std::rc::Rc;
+use std::string::{String, ToString};
+use std::vec::Vec;
 
 #[allow(deprecated)]
 use parser::Node;
@@ -295,7 +295,7 @@ pub fn selector<'a>(
 ///
 /// ```rust
 /// extern crate jsonpath_sgx as jsonpath;
-/// extern crate serde;
+/// extern crate serde_sgx as serde;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde::{Deserialize, Serialize};
@@ -412,7 +412,7 @@ pub fn select_as_str(json_str: &str, path: &str) -> Result<String, JsonPathError
 ///
 /// ```rust
 /// extern crate jsonpath_sgx as jsonpath;
-/// extern crate serde;
+/// extern crate serde_sgx as serde;
 /// #[macro_use] extern crate serde_json_sgx as serde_json;
 ///
 /// use serde::{Deserialize, Serialize};

@@ -1,7 +1,5 @@
 #![no_std]
-use sgx_alloc::string::{String, ToString};
-use sgx_alloc::vec;
-use sgx_alloc::vec::Vec;
+use std::vec;
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use sgx_tstd::prelude::v1::*;

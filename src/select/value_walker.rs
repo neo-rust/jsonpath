@@ -1,6 +1,5 @@
 #![no_std]
-use sgx_alloc::vec;
-use sgx_alloc::vec::Vec;
+use std::vec;
 use serde_json::Value;
 use sgx_tstd::prelude::v1::*;
 use std::collections::HashSet;

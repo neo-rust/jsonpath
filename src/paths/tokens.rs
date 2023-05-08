@@ -1,5 +1,5 @@
 use super::str_reader::StrRange;
-use sgx_alloc::vec::Vec;
+use std::vec::Vec;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {

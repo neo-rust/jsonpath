@@ -1,12 +1,10 @@
 #![no_std]
-use sgx_alloc::vec;
-use sgx_alloc::vec::Vec;
+use std::vec;
 use sgx_tstd::prelude::v1::*;
 
 use std::collections::HashSet;
 
 use serde_json::{Number, Value};
-
 use super::cmp::*;
 use super::utils;
 use super::value_walker::ValueWalker;
@@ -602,8 +600,9 @@ impl<'a> FilterTerms<'a> {
 #[cfg(test)]
 mod expr_term_inner_tests {
     use sgx_alloc::string::ToString;
-    use sgx_alloc::vec;
+    use std::vec;
     use serde_json::{Number, Value};
+    use std::string::ToString;
 
     use selector::terms::ExprTerm;
 

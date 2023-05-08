@@ -1,13 +1,7 @@
 #![no_std]
 use sgx_tstd::prelude::v1::*;
-
-use sgx_alloc::boxed::Box;
-use sgx_alloc::string::String;
-use sgx_alloc::vec;
-use sgx_alloc::vec::Vec;
-
+use std::vec;
 use std::str::FromStr;
-
 use super::parser_node_visitor::ParserNodeVisitor;
 use super::parser_token_handler::ParserTokenHandler;
 use super::str_reader::StrRange;
@@ -627,8 +621,10 @@ pub struct ParserNode {
 #[cfg(test)]
 mod path_parser_tests {
     use sgx_alloc::string::String;
-    use sgx_alloc::vec;
+    use std::vec;
     use sgx_alloc::vec::Vec;
+    use std::string::String;
+    use std::vec::Vec;
     use paths::path_parser::PathParser;
     use paths::str_reader::StrRange;
     use paths::tokens::{FilterToken, ParseToken};

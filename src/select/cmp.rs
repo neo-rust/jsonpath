@@ -1,6 +1,6 @@
-use sgx_alloc::vec;
-use sgx_alloc::vec::Vec;
+use std::vec;
 use serde_json::Value;
+use std::vec::Vec;
 
 pub(super) trait Cmp {
     fn cmp_bool(&self, v1: bool, v2: bool) -> bool;

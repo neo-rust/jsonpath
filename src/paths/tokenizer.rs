@@ -1,5 +1,4 @@
 #![no_std]
-use sgx_alloc::vec::Vec;
 use sgx_tstd::prelude::v1::*;
 use std::result::Result;
 
@@ -291,8 +290,9 @@ impl<'a> TokenReader<'a> {
 
 #[cfg(test)]
 mod tokenizer_tests {
-    use sgx_alloc::vec;
+    use std::vec;
     use sgx_alloc::vec::Vec;
+    use std::vec::Vec;
     use paths::str_reader::StrRange;
     use paths::tokenizer::{TokenError, TokenReader};
     use paths::tokens::Token;

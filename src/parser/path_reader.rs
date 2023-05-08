@@ -1,5 +1,4 @@
 #![no_std]
-use sgx_alloc::vec::Vec;
 use sgx_tstd::prelude::v1::*;
 
 use sgx_alloc::string::String;

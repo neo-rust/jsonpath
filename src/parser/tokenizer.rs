@@ -1,11 +1,6 @@
 #![no_std]
-use sgx_alloc::string::String;
-use sgx_alloc::vec::Vec;
-use sgx_alloc::{format, vec};
 use sgx_tstd::prelude::v1::*;
-
 use std::result::Result;
-
 use super::path_reader::{PathReader, ReaderError};
 
 const CH_DOLLA: char = '$';
